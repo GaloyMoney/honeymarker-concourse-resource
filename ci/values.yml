@@ -1,6 +1,6 @@
 #@data/values
 ---
-git_uri: git@github.com:GaloyMoney/honeymarker-concourse-resource.git
+git_uri: https://github.com/GaloyMoney/honeymarker-concourse-resource
 git_branch: main
 docker_registry: us.gcr.io/galoy-org
 docker_registry_user: ((docker-creds.username))
