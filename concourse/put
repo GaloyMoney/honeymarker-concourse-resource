@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -e
+
+exec 3>&1 # make stdout available as fd 3 for the result
+exec 1>&2 # redirect all output to stderr for logging
+
+# for jq
+PATH=/usr/local/bin:$PATH
+
+payload="$(cat <&0)"
+
+api_key=$(jq -r '.source.api_key' <<< $payload)
+dataset=$(jq -r '.params.dataset // ""' <<< $payload)
+if [ -n "${dataset}" ]; then
+  dataset=$(jq -r '.source.dataset // ""' <<< $payload)
+fi
+message=$(jq -r '.params.message // ""' <<< $payload)
+
+ATC_EXTERNAL_URL=${ATC_EXTERNAL_URL:-https://atc.com}
+BUILD_TEAM_NAME=${BUILD_TEAM_NAME:-team}
+BUILD_PIPELINE_NAME=${BUILD_PIPELINE_NAME:-pipeline}
+BUILD_JOB_NAME=${BUILD_JOB_NAME:-job}
+BUILD_NAME=${BUILD_NAME:-build}
+
+ret=$(honeymarker -k ${api_key} -d ${dataset} add \
+  -s $(date +%s) \
+  --type=deploy \
+  --msg="${message}" \
+  --url=${ATC_EXTERNAL_URL}/teams/${BUILD_TEAM_NAME}/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME} \
+)
+
+version=$(jq -r '{ id: .id }' <<< $ret)
+metadata=$(jq -r 'to_entries | map({ name: .key, value: .value })' <<< $ret)
+
+echo { "version": ${version}, "metadata": ${metadata} } >&3
