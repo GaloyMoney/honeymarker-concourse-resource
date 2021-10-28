@@ -13,7 +13,7 @@ payload="$(cat <&0)"
 api_key=$(jq -r '.source.api_key' <<< $payload)
 dataset=$(jq -r '.params.dataset // ""' <<< $payload)
 if [ ! -n "${dataset}" ]; then
-  dataset=$(jq -r '.source.dataset // ""' <<< $payload)
+  dataset=$(jq -r '.source.dataset' <<< $payload)
 fi
 message=$(jq -r '.params.message // ""' <<< $payload)
 
