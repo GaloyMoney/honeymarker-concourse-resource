@@ -30,4 +30,4 @@ ret=$(honeymarker -k ${api_key} -d ${dataset} add \
   --url="${ATC_EXTERNAL_URL}/teams/${BUILD_TEAM_NAME}/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}" \
 )
 
-jq -r '{ version: { id: .id }, metadata: to_entries | map({ name: .key, value: .value }) }' <<< $ret >&3
+jq -r '{ version: { id: .id }, metadata: to_entries | map({ name: .key, value: .value | tostring }) }' <<< $ret >&3
