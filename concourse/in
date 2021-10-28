@@ -12,4 +12,8 @@ payload="$(cat <&0)"
 
 version=$(jq -r '.version // ""' <<< $payload)
 
-echo "[ ${version} ]" >&3
+if [ -n "${version}" ]; then
+  jq -r '{ version: .version }' <<< $payload >&3
+else
+  echo "{}" >&3
+fi
