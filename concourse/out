@@ -24,10 +24,10 @@ BUILD_JOB_NAME=${BUILD_JOB_NAME:-job}
 BUILD_NAME=${BUILD_NAME:-build}
 
 ret=$(honeymarker -k ${api_key} -d ${dataset} add \
-  -s $(date +%s) \
+  --start_time="$(date +%s)" \
   --type=deploy \
   --msg="${message}" \
-  --url=${ATC_EXTERNAL_URL}/teams/${BUILD_TEAM_NAME}/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME} \
+  --url="${ATC_EXTERNAL_URL}/teams/${BUILD_TEAM_NAME}/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}" \
 )
 
 version=$(jq -r '{ id: .id }' <<< $ret)
