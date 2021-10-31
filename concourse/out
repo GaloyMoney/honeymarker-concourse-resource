@@ -15,7 +15,7 @@ dataset=$(jq -r '.params.dataset // ""' <<< $payload)
 if [ ! -n "${dataset}" ]; then
   dataset=$(jq -r '.source.dataset' <<< $payload)
 fi
-message=$(jq -r '.params.message // ""' <<< $payload)
+message="${BUILD_JOB_NAME}/${BUILD_NAME}"
 
 ATC_EXTERNAL_URL=${ATC_EXTERNAL_URL:-https://atc.com}
 BUILD_TEAM_NAME=${BUILD_TEAM_NAME:-team}
