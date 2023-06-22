@@ -32,6 +32,7 @@ jobs:
 resources:
 - name: repo
   type: git
+  webhook_token: ((webhook.secret))
   source:
     ignore_paths: ["ci/*[^md]"]
     uri: #@ data.values.git_uri
