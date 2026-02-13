@@ -42,6 +42,6 @@ resources:
   type: registry-image
   source:
     tag: edge
-    username: #@ data.values.docker_registry_user
-    password: #@ data.values.docker_registry_password
-    repository: #@ resource_image()
+    username: #@ data.values.gar_registry_user
+    password: #@ data.values.gar_registry_password
+    repository: #@ data.values.gar_registry + "/honeymarker-resource"
