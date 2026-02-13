@@ -2,6 +2,6 @@
 ---
 git_uri: https://github.com/GaloyMoney/honeymarker-concourse-resource
 git_branch: main
-docker_registry: us.gcr.io/galoy-org
-docker_registry_user: ((docker-creds.username))
-docker_registry_password: ((docker-creds.password))
+gar_registry: us.gcr.io/galoyorg
+gar_registry_user: ((gar-creds.username))
+gar_registry_password: ((gar-creds.password))
